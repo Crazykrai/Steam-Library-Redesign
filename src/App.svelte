@@ -3,6 +3,7 @@
   import * as Tabs from "$lib/components/ui/tabs";
   import { Input } from "$lib/components/ui/input/index.js";
 </script>
+
 <style>
   .steam-bar {
     background-color: #0E141B;
@@ -37,12 +38,13 @@
   </div>
 
   <div class="flex library-header">
-    <Tabs.Root value="collections" class="w-[400px]">
+    <Tabs.Root value="collections" class="w-[400px] mr-26">
       <Tabs.List>
         <Tabs.Trigger value="collections">Collections</Tabs.Trigger>
         <Tabs.Trigger value="news">News and Updates</Tabs.Trigger>
       </Tabs.List>
     </Tabs.Root>
+    <Input type="" placeholder="Search..." class="max-w-xs"></Input>
   </div>
 
   <div class="grid flex grid-cols-5 w-full" style="height: 87.337%;">
