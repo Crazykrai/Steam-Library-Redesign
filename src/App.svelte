@@ -15,8 +15,17 @@
     background-color: #212B45;
     padding:10px;
   }
+
+  .side-bar {
+    background-color: #1E2329;
+  }
+
+  .main-section {
+    background-image: linear-gradient(to bottom right, #313843, #1E2329);
+  }
 </style>
-<main>
+
+<main class="h-full w-full">
   <!-- Steam Bar -->
   <div class="flex text-lg steam-bar text-white font-bold">
     <p>&lt</p>
@@ -34,6 +43,18 @@
         <Tabs.Trigger value="news">News and Updates</Tabs.Trigger>
       </Tabs.List>
     </Tabs.Root>
+  </div>
+
+  <div class="grid flex grid-cols-5 w-full" style="height: 87.337%;">
+    <!-- Steam Sidebar -->
+    <div class="flex side-bar">
+
+    </div>
+
+    <!-- Steam main section -->
+    <div class="flex col-span-4 main-section">
+
+    </div>
   </div>
 </main>
 
