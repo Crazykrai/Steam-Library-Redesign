@@ -1,4 +1,6 @@
 <script module>
+// @ts-nocheck
+
 	import { tv } from "tailwind-variants";
 
 	export const buttonVariants = tv({
@@ -11,6 +13,7 @@
 				secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
 				ghost: "hover:bg-accent hover:text-accent-foreground",
 				link: "text-primary underline-offset-4 hover:underline",
+				recent: "bg-filter bg-opacity-5 text-filter hover:bg-opacity-25",
 			},
 			size: {
 				default: "h-10 px-4 py-2",

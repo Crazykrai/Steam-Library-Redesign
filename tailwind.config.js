@@ -18,6 +18,8 @@ const config = {
 			colors: {
 				'library-tab': '#4B619B',
 				'input-background': '#0E141B',
+				'filter': '#76808C',
+				'gamebar': '#313843',
 				border: "hsl(var(--border) / <alpha-value>)",
 				input: "hsl(var(--input) / <alpha-value>)",
 				ring: "hsl(var(--ring) / <alpha-value>)",
