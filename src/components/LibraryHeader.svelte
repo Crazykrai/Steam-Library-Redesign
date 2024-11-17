@@ -6,16 +6,21 @@
   import { Clock } from 'lucide-svelte';
   import { CirclePlay } from 'lucide-svelte';
   import { Button } from "$lib/components/ui/button/index.js";
+
+  export let activeTab;
+  export let onTabChange;
 </script>
 
 
-<Tabs.Root value="collections" class="mr-16">
-    <Tabs.List>
-      <Tabs.Trigger value="collections">Collections</Tabs.Trigger>
-      <Tabs.Trigger value="news">News and Updates</Tabs.Trigger>
-    </Tabs.List>
+<Tabs.Root value={activeTab} onValueChange={onTabChange} class="mr-16">
+  <Tabs.List>
+    <Tabs.Trigger value="collections">Collections</Tabs.Trigger>
+    <Tabs.Trigger value="news">News and Updates</Tabs.Trigger>
+  </Tabs.List>
 </Tabs.Root>
+
 <Input type="" placeholder="Search..." class="max-w-xs mr-5"></Input>
+
 <Button variant="recent" size="icon" style="margin-right: 5px;">
     <Clock style="height: 1.5rem; width: 1.5rem;" />
 </Button>

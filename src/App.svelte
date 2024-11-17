@@ -1,6 +1,39 @@
 <script>
-  import "./app.css";
+ import "./app.css";
   import LibraryHeader from "./components/LibraryHeader.svelte";
+  import GameCollections from './lib/components/collections/GameCollections.svelte';
+  import GamePage from '$lib/components/GamePage.svelte';
+  import NewsPage from '$lib/components/NewsPage.svelte';
+  import { allGames } from './lib/data/games.js';
+  import { recentGames } from './lib/stores.js'; // Import the store for recent games
+
+  // State variables
+  let activeTab = "collections"; // Possible values: "collections", "news", "game"
+  let selectedGame = null;
+
+  // Function to handle game selection
+  function onGameSelect(game) {
+    selectedGame = game;
+    activeTab = "game";
+    // Update recent games
+    recentGames.update(games => {
+      const index = games.findIndex(g => g.name === game.name);
+      if (index !== -1) {
+        // Move the game to the top
+        games.splice(index, 1);
+      }
+      games.unshift(game);
+      // Keep only the latest 10 games
+      if (games.length > 10) games.pop();
+      return games;
+    });
+  }
+
+  // Function to handle tab changes
+  function onTabChange(value) {
+    activeTab = value;
+    selectedGame = null; // Reset selected game when switching tabs
+  }
 </script>
 
 <style>
@@ -39,8 +72,7 @@
   </div>
 
   <div class="flex library-header text-white">
-    <LibraryHeader />
-
+    <LibraryHeader {activeTab} {onTabChange} />
   </div>
 
   <div class="grid flex grid-cols-5 w-full" style="height: 87.337%;">
@@ -59,8 +91,18 @@
     </div>
 
     <!-- Steam main section -->
-    <div class="flex col-span-4 main-section">
-
+    <!-- <div class="flex col-span-4 main-section"> -->
+    <div class="col-span-4 main-section">
+      {#if activeTab === "collections"}
+        <GameCollections title="Favorite Games" on:selectGame={(e) => onGameSelect(e.detail.game)} />
+        <GameCollections title="Recent Games" on:selectGame={(e) => onGameSelect(e.detail.game)} />
+        <GameCollections title="Games with Friends Online" on:selectGame={(e) => onGameSelect(e.detail.game)} />
+      {:else if activeTab === "news"}
+        <!-- News and Updates content -->
+        <p>News and Updates will be displayed here.</p>
+      {:else if activeTab === "game" && selectedGame}
+        <GamePage {selectedGame} />
+      {/if}
     </div>
   </div>
 </main>
