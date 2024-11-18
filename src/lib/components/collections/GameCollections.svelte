@@ -1,65 +1,63 @@
-<!-- GameCollections.svelte -->
+<!-- src/lib/components/collections/GameCollections.svelte -->
+
 <script>
     import { createEventDispatcher } from 'svelte';
-    import { allGames } from '../../data/games.js';
-    import { recentGames } from '../../stores.js';
-    import { onDestroy } from 'svelte';
-  
-    export let title = '';
-    export let collection = null; // If null, it's a predefined collection
+    
+    export let collection = null; // Collection is mandatory for rendering games
     const dispatch = createEventDispatcher();
   
     let games = [];
     let isCollapsed = false;
   
-    // Define game categories
-    const favoriteGameNames = ['Batman', 'Bioshock'];
-    const friendsGameNames = ['Halo'];
-  
-    // Reactive statement to populate games based on collection type
+    // Reactive statement to populate games based on collection
     $: {
       if (collection) {
         games = [...collection.games];
-      } else if (title === 'Favorite Games') {
-        games = allGames.filter((game) => favoriteGameNames.includes(game.name));
-      } else if (title === 'Recent Games') {
-        games = [...$recentGames];
-      } else if (title === 'Games with Friends Online') {
-        games = allGames.filter((game) => friendsGameNames.includes(game.name));
-      } else {
-        // Handle other titles or default behavior
-        games = [];
       }
     }
   
-    // Function to handle sorting
+    // Function to emit sort event
     function sortCollection() {
-      if (collection) {
-        // Emit sort event for user-defined collections
-        dispatch('sort');
-      } else {
-        // Reverse games array locally for predefined collections
-        games = [...games].reverse();
-      }
+      console.log(`Sorting collection: ${collection.title}`);
+      dispatch('sort');
     }
   
     // Function to emit selectGame event
     function selectGame(game) {
+      console.log(`Selecting game: ${game.name}`);
       dispatch('selectGame', { game });
     }
   
-    // Subscribe to recentGames store if this is the "Recent Games" collection
-    let unsubscribe;
-    if (!collection && title === 'Recent Games') {
-      unsubscribe = recentGames.subscribe((value) => {
-        games = [...value];
-      });
+    // Handle drag events to add visual feedback
+    function handleDragEnter(event) {
+      event.preventDefault();
+      event.currentTarget.classList.add('drag-over');
     }
   
-    // Clean up subscription on component destroy
-    onDestroy(() => {
-      if (unsubscribe) unsubscribe();
-    });
+    function handleDragLeave(event) {
+      event.currentTarget.classList.remove('drag-over');
+    }
+  
+    // Handle drop event
+    function handleDropLocal(event) {
+      event.preventDefault();
+      event.currentTarget.classList.remove('drag-over');
+      
+      const data = event.dataTransfer.getData('application/json');
+      if (!data) return;
+      const game = JSON.parse(data);
+      
+      console.log(`Dropped game: ${game.name} into collection: ${collection.title}`);
+      
+      // Emit a drop event to the parent with the game and collection title
+      dispatch('drop', { game, collectionTitle: collection.title });
+    }
+  
+    // Function to emit removeGame event
+    function removeGame(game) {
+      console.log(`Removing game: ${game.name} from collection: ${collection.title}`);
+      dispatch('removeGame', { game, collectionTitle: collection.title });
+    }
   </script>
   
   <style>
@@ -69,6 +67,7 @@
       border-radius: 10px;
       background-image: linear-gradient(to bottom right, #191c2289, #1E2329);
       margin: 15px;
+      border: 2px solid transparent; /* For drag-over visual feedback */
     }
     .collection-header {
       font-size: 1.5rem;
@@ -130,6 +129,7 @@
       width: 150px;
       height: 220px;
       transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
     }
     .game-item:hover {
       transform: scale(1.05);
@@ -141,11 +141,41 @@
       object-fit: cover;
       border-radius: 10px;
     }
+    .remove-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: rgba(255, 0, 0, 0.7);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .remove-button:hover {
+      background-color: rgba(255, 0, 0, 1);
+    }
+  
+    /* Highlight the collection when a draggable item is over it */
+    .game-collection.drag-over {
+      border-color: #66c0f4;
+    }
   </style>
   
-  <div class="game-collection">
+  <div
+    class="game-collection"
+    on:dragover|preventDefault
+    on:dragenter={handleDragEnter}
+    on:dragleave={handleDragLeave}
+    on:drop={handleDropLocal}
+  >
     <h2 class="collection-header">
-      <span>{collection ? collection.title : title}</span>
+      <span>{collection.title}</span>
       <div class="collection-controls">
         <button class="sort-button" on:click={sortCollection} title="Sort">
           Sort
@@ -162,6 +192,7 @@
         {#each games as game}
           <div class="game-item" on:click={() => selectGame(game)}>
             <img src={game.image} alt={game.name} />
+            <button class="remove-button" on:click={(e) => { e.stopPropagation(); removeGame(game); }}>×</button>
           </div>
         {/each}
       </div>
