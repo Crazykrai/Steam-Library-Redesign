@@ -309,6 +309,7 @@
     <!-- Steam main section -->
     <div class="col-span-4 main-section">
       {#if activeTab === "collections"}
+        <Collections /> <!-- This is the Add New Collection component -->
         <!-- Render All Collections (Predefined and User-Defined) -->
         {#each userCollectionsList as collection}
           <GameCollections 
@@ -320,8 +321,7 @@
           />
         {/each}
 
-        <!-- Add New Collection Section -->
-        <Collections /> <!-- This is the Add New Collection component -->
+
       {:else if activeTab === "news"}
         <!-- News and Updates content -->
         <NewsPage />

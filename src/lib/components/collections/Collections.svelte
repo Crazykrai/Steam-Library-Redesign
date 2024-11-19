@@ -1,7 +1,17 @@
 <!-- src/lib/components/collections/Collections.svelte -->
 <script>
+// @ts-nocheck
+
     import { userCollections } from '../../stores.js';
     import { onDestroy } from 'svelte';
+    import {
+      Button,
+      buttonVariants
+    } from "$lib/components/ui/button/index.js";
+    import * as Dialog from "$lib/components/ui/dialog/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import { Label } from "$lib/components/ui/label/index.js";
+
     
     let collectionName = '';
     let userCollectionsList = [];
@@ -38,12 +48,6 @@
   </script>
   
   <style>
-    .add-collection {
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
     
     .add-collection input {
       padding: 8px;
@@ -69,13 +73,29 @@
     }
   </style>
   
-  <div class="add-collection">
-    <input
-      type="text"
-      bind:value={collectionName}
-      placeholder="New Collection Name"
-      on:keydown={(e) => e.key === 'Enter' && addNewCollection()}
-    />
-    <button on:click={addNewCollection}>Add New Collection</button>
+  <div class="flex add-collection justify-center">
+
+    <Dialog.Root class="bg-gamebar">
+      <Dialog.Trigger class={buttonVariants({ variant: "default" })}
+        >Add Collection</Dialog.Trigger
+      >
+      <Dialog.Content class="z-50 bg-recent text-white">
+        <Dialog.Header>
+          <Dialog.Title>Add New Collection</Dialog.Title>
+          <Dialog.Description>
+            <span class="text-white">Add a new collection by inputting the title here. Hit create when done to save.</span>
+          </Dialog.Description>
+        </Dialog.Header>
+        <div class="grid gap-4 py-4">
+          <div class="grid grid-cols-4 items-center gap-4">
+            <Label for="name" class="text-right">Name</Label>
+            <Input id="name" bind:value={collectionName} class="col-span-3 border border-white" />
+          </div>
+        </div>
+        <Dialog.Footer>
+          <Button type="submit" on:click={addNewCollection}>Add</Button>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   </div>
   
