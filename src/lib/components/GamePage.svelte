@@ -10,6 +10,13 @@
     import { Settings } from 'lucide-svelte';
 
     export let selectedGame;
+
+    let installed = selectedGame.installed;
+    function install() {
+        console.log(installed)
+        installed = true;
+        console.log(installed)
+    }
 </script>
   
 <style>
@@ -21,11 +28,14 @@
         <img class="w-full h-80 object-cover" src={selectedGame.bg} alt={selectedGame.name} />
         <div class="flex mt-5 mb-5">
             <div class="flex">
-                {#if selectedGame.installed}
-                    <Button variant="play" size="play"><Play /> <span style="font-family: 'Inter'; font-size: 20px;">Play</span></Button>
-                {:else}
-                    <Button variant="install" size="play"><Download /> <span style="font-family: 'Inter'; font-size: 20px;">Install</span></Button>
-                {/if}
+                {#key installed}
+                    {#if installed}
+                        <Button variant="play" size="play"><Play /> <span style="font-family: 'Inter'; font-size: 20px;">Play</span></Button>
+                    {:else}
+                        <Button variant="install" size="play" on:click={install}><Download /> <span style="font-family: 'Inter'; font-size: 20px;">Install</span></Button>
+                    {/if}
+                {/key}
+                
                 <Timer class="h-10 w-10 ml-4 mr-2" />
                 <div class="text-filter font-bold" style="margin-top: -4px">
                     <p class="text-base">PLAY TIME</p>

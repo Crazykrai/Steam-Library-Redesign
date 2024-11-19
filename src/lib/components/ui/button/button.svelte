@@ -54,6 +54,7 @@
 {:else}
 	<button
 		bind:this={ref}
+		on:click
 		class={cn(buttonVariants({ variant, size, className }))}
 		{type}
 		{...restProps}

@@ -7,21 +7,10 @@
   import { Clock, CirclePlay } from 'lucide-svelte';
   import { Button } from "$lib/components/ui/button/index.js";
 
-  export let activeTab;
-  export let onTabChange;
+  let { value = $bindable(), ...props} = $props();
 
-  const dispatch = createEventDispatcher();
-
-  let searchQuery = '';
-
-  // Handle search input changes
-  function handleSearch(event) {
-    searchQuery = event.target.value;
-    dispatch('search', { query: searchQuery });
-  }
-
-  // Handle Recent button click
-  function handleRecentClick() {
+    // Handle Recent button click
+    function handleRecentClick() {
     dispatch('sort', { sortBy: 'recent' });
   }
 
@@ -36,22 +25,15 @@
   }
 </script>
 
-<!-- Tabs for Collections and News -->
-<Tabs.Root value={activeTab} onValueChange={onTabChange} class="mr-16">
+
+<Tabs.Root value={props.activeTab} onValueChange={props.onTabChange} class="mr-16">
   <Tabs.List>
     <Tabs.Trigger value="collections">Collections</Tabs.Trigger>
     <Tabs.Trigger value="news">News and Updates</Tabs.Trigger>
   </Tabs.List>
 </Tabs.Root>
 
-<!-- Search Input -->
-<Input 
-  type="text" 
-  placeholder="Search..." 
-  class="max-w-xs mr-5" 
-  bind:value={searchQuery} 
-  on:input={handleSearch} 
-/>
+<Input type="" placeholder="Search..." class="max-w-xs mr-5" bind:value={value}></Input>
 
 <!-- Sorting Buttons -->
 <Button 

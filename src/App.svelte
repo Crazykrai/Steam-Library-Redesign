@@ -12,8 +12,10 @@
   import { onDestroy } from 'svelte';
   
   // State variables
-  let activeTab = "collections"; // Possible values: "collections", "news", "game"
-  let selectedGame = null;
+  let activeTab = $state("collections"); // Possible values: "collections", "news", "game"
+  let selectedGame = $state(null);
+
+  let search = $state('');
   
   // Function to handle game selection
   function onGameSelect(game) {
@@ -48,7 +50,7 @@
   }
   
   // Subscribe to userCollections store
-  let userCollectionsList = [];
+  let userCollectionsList = $state([]);
   const unsubscribe = userCollections.subscribe((value) => {
     userCollectionsList = value;
   });
@@ -148,6 +150,25 @@
     
     console.log(`Successfully removed "${game.name}" from "${collectionTitle}"`);
   }
+  let sortMethod = $state('alphabetical')
+
+  function handleSortEvent(event) {
+    sortMethod = event.detail.sortBy
+  }
+
+  function sortGames() {
+    let result = []
+    
+    if(sortMethod == 'alphabetical') {
+      result = allGames.sort((a, b) => a.name.localeCompare(b.name));
+    } else if(sortMethod == 'recent') {
+
+    } else if(sortMethod == 'installed') {
+      result = allGames.filter(game => game.installed);
+    }
+
+    return result;
+  }
 </script>
 
 <style>
@@ -216,7 +237,7 @@
 
   <!-- Library Header -->
   <div class="flex library-header text-white">
-    <LibraryHeader {activeTab} {onTabChange} />
+    <LibraryHeader activeTab={activeTab} onTabChange={onTabChange} bind:value={search} on:sort={handleSortEvent} />
   </div>
 
   <!-- Main Grid Layout -->
@@ -224,21 +245,40 @@
     <!-- Steam Sidebar -->
     <div class="flex side-bar text-white">
       <div class="pt-2 pl-1 pr-8 w-full grid grid-flow-row auto-rows-max gap-1">
-        {#each allGames.sort((a, b) => a.name.localeCompare(b.name)) as game}
-          <!-- svelte-ignore a11y_no_static_element_interactions -->
-          <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <div
-            class="draggable-game clickable"
-            draggable="true"
-            on:dragstart={(event) => {
-              event.dataTransfer.setData('application/json', JSON.stringify(game));
-            }}
-            on:click={() => onGameSelect(game)}
-          >
-            <img src={game.image} alt={game.name} />
-            <p>{game.name}</p>
-          </div>
-        {/each}
+        {#if search != ''}
+          {#each sortGames().filter(a => a.name.startsWith(search)) as game}
+              <!-- svelte-ignore a11y_no_static_element_interactions -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
+              <div
+                class="draggable-game clickable"
+                draggable="true"
+                ondragstart={(event) => {
+                  event.dataTransfer.setData('application/json', JSON.stringify(game));
+                }}
+                onclick={() => onGameSelect(game)}
+              >
+                <img src={game.image} alt={game.name} />
+                <p>{game.name}</p>
+              </div>
+            {/each}
+        {:else}
+          {#each sortGames() as game}
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <div
+              class="draggable-game clickable"
+              draggable="true"
+              ondragstart={(event) => {
+                event.dataTransfer.setData('application/json', JSON.stringify(game));
+              }}
+              onclick={() => onGameSelect(game)}
+            >
+              <img src={game.image} alt={game.name} />
+              <p>{game.name}</p>
+            </div>
+          {/each}
+        {/if}
+        
       </div>
     </div>
 
