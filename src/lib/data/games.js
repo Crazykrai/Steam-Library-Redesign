@@ -3,7 +3,7 @@
 export const allGames = [
     {
       name: 'Batman',
-      installed: true,
+      installed: false,
       image: 'src/lib/images/batman_arkham.jpg', // Original local image
       link: '/game/batman',
       bg: 'https://gameswithfriendswrites.wordpress.com/wp-content/uploads/2015/07/batman-arkham-knight-game-hd-wallpaper-1080p.jpg', // Batman game wallpaper

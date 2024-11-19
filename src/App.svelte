@@ -157,18 +157,42 @@
   }
 
   function sortGames() {
-    let result = []
-    
-    if(sortMethod == 'alphabetical') {
-      result = allGames.sort((a, b) => a.name.localeCompare(b.name));
-    } else if(sortMethod == 'recent') {
+  let result = [];
 
-    } else if(sortMethod == 'installed') {
-      result = allGames.filter(game => game.installed);
+  if (sortMethod === 'alphabetical') {
+    result = [...allGames].sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortMethod === 'recent') {
+    const recentCollection = userCollectionsList.find(col => col.title === 'Recent Games');
+
+    if (recentCollection) {
+      const recentMap = new Map();
+      recentCollection.games.forEach((game, index) => {
+        recentMap.set(game.name, index);
+      });
+
+      result = [...allGames].sort((a, b) => {
+        const aRecent = recentMap.has(a.name) ? recentMap.get(a.name) : Infinity;
+        const bRecent = recentMap.has(b.name) ? recentMap.get(b.name) : Infinity;
+
+        if (aRecent !== bRecent) {
+          return aRecent - bRecent; // Games in "Recent Games" come first
+        }
+
+        return a.name.localeCompare(b.name);
+      });
+    } else {
+      result = [...allGames].sort((a, b) => a.name.localeCompare(b.name));
     }
-
-    return result;
+  } else if (sortMethod === 'installed') {
+    result = allGames
+      .filter(game => game.installed)
+      .sort((a, b) => a.name.localeCompare(b.name));
+  } else {
+    result = [...allGames].sort((a, b) => a.name.localeCompare(b.name));
   }
+
+  return result;
+}
 </script>
 
 <style>
