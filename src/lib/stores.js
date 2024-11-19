@@ -28,11 +28,7 @@ const predefinedCollections = [
   {
     title: 'Games with Friends Online',
     games: allGames.filter(game => ['Halo'].includes(game.name)),
-  },
-  {
-    title: 'Installed',
-    games: allGames.filter(game => game.installed)
-  },
+  }
 ];
 
 // Initialize userCollections with predefined collections and persisted data

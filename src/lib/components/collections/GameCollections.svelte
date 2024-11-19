@@ -15,7 +15,7 @@
     // Reactive statement to populate games based on collection
     $: {
       if (collection) {
-        games = allGames.filter(game => collection.games.find(a => a.name == game.name))
+        games = collection.games.map(game => allGames.find(g => g.name == game.name))
       }
     }
   
