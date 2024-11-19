@@ -2,7 +2,7 @@
 
 export const allGames = [
   { name: 'Batman', installed: true, image: 'src/lib/images/batman_arkham.jpg', link: '/game/batman' },
-  { name: 'Bioshock', installed: true, image: 'src/lib/images/bioshock.jpg', link: '/game/bioshock' },
+  { name: 'Bioshock', installed: false, image: 'src/lib/images/bioshock.jpg', link: '/game/bioshock' },
   { name: 'Borderlands 2', installed: true, image: 'src/lib/images/borderlands2.jpg', link: '/game/borderlands2' },
   { name: 'Halo', installed: true, image: 'src/lib/images/halo.jpg', link: '/game/halo' },
   { name: 'Sonic Frontiers',

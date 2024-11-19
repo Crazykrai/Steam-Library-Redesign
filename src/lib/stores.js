@@ -1,6 +1,6 @@
 // src/lib/stores.js
 
-import { writable, derived } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { allGames } from './data/games.js';
 import { generateRandomNews } from './utils/generateRandomNews.js';
 
@@ -28,6 +28,10 @@ const predefinedCollections = [
   {
     title: 'Games with Friends Online',
     games: allGames.filter(game => ['Halo'].includes(game.name)),
+  },
+  {
+    title: 'Installed',
+    games: allGames.filter(game => game.installed)
   },
 ];
 
