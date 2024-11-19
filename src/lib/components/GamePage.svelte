@@ -4,6 +4,7 @@
     import { Button } from "$lib/components/ui/button/index.js";
     import { ScrollArea } from "$lib/components/ui/scroll-area/index.js"
     import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+    import { Download } from 'lucide-svelte';
     import { Play } from 'lucide-svelte';
     import { Timer } from 'lucide-svelte';
     import { Settings } from 'lucide-svelte';
@@ -20,7 +21,11 @@
         <img class="w-full h-80 object-cover" src={selectedGame.bg} alt={selectedGame.name} />
         <div class="flex mt-5 mb-5">
             <div class="flex">
-                <Button variant="play" size="play"><Play /> <span style="font-family: 'Inter'; font-size: 20px;">Play</span></Button>
+                {#if selectedGame.installed}
+                    <Button variant="play" size="play"><Play /> <span style="font-family: 'Inter'; font-size: 20px;">Play</span></Button>
+                {:else}
+                    <Button variant="install" size="play"><Download /> <span style="font-family: 'Inter'; font-size: 20px;">Install</span></Button>
+                {/if}
                 <Timer class="h-10 w-10 ml-4 mr-2" />
                 <div class="text-filter font-bold" style="margin-top: -4px">
                     <p class="text-base">PLAY TIME</p>
@@ -76,14 +81,14 @@
     <div class="ml-4 grid grid-flow-row auto-rows-min gap-4 text-white font-bold">
         <div class="p-4 bg-recent/40">
             <p class="text-base mb-4">Friend Activity</p>
-            <ScrollArea class="rounded-md border border-black border-2">
+            <ScrollArea class="rounded-md border border-black border-2" orientation="horizontal">
                 <div class="p-2">
                     <p class="text-sm">Currently Playing:</p>
                     <div class="flex w-full space-x-4">
                         {#each selectedGame.friends.playing as friend}
                         <Tooltip.Provider>
                             <Tooltip.Root>
-                              <Tooltip.Trigger variant="icon"><image src="{friend.avatar}"/></Tooltip.Trigger
+                              <Tooltip.Trigger><span style="font-size: 0px;">test</span><image class="h-8" style="margin-top:-12px" src="{friend.avatar}"/></Tooltip.Trigger
                               >
                               <Tooltip.Content>
                                 <p>{friend.name}</p>
@@ -96,14 +101,14 @@
                 
             </ScrollArea>
 
-            <ScrollArea class="rounded-md border border-black border-2 mt-4">
+            <ScrollArea class="rounded-md border border-black border-2 mt-4" orientation="horizontal">
                 <div class="p-2">
                     <p class="text-sm">Played Previously:</p>
                     <div class="flex w-full space-x-4">
                         {#each selectedGame.friends.previous as friend}
                         <Tooltip.Provider>
                             <Tooltip.Root>
-                              <Tooltip.Trigger><image src="{friend.avatar}"/></Tooltip.Trigger
+                              <Tooltip.Trigger><span style="font-size: 0px">test</span><image class="h-8" style="margin-top:-12px" src="{friend.avatar}"/></Tooltip.Trigger
                               >
                               <Tooltip.Content>
                                 <p>{friend.name}</p>
@@ -118,28 +123,65 @@
         </div>
         <div class="p-4 bg-recent/40">
             <p class="text-base mb-4">Achievements</p>
-            <ScrollArea class="rounded-md border border-black border-2">
+            <ScrollArea class="rounded-md border border-black border-2" orientation="horizontal">
                 <div class="p-2">
                     <p class="text-sm">Locked:</p>
                     <div class="flex w-full space-x-4">
-
+                        {#each selectedGame.achievements.locked as achievement}
+                        <Tooltip.Provider>
+                            <Tooltip.Root>
+                              <Tooltip.Trigger><span style="font-size: 0px">test</span><image class="h-8" style="margin-top:-12px" src="{achievement.badge}"/></Tooltip.Trigger
+                              >
+                              <Tooltip.Content>
+                                <p>{achievement.name}</p>
+                                <p>{achievement.description}</p>
+                              </Tooltip.Content>
+                            </Tooltip.Root>
+                          </Tooltip.Provider>
+                        {/each}
                     </div>
                 </div>
                 
             </ScrollArea>
 
-            <ScrollArea class="rounded-md border border-black border-2 mt-4">
+            <ScrollArea class="rounded-md border border-black border-2 mt-4" orientation="horizontal">
                 <div class="p-2">
                     <p class="text-sm">Unlocked:</p>
                     <div class="flex w-full space-x-4">
-                        
+                        {#each selectedGame.achievements.unlocked as achievement}
+                        <Tooltip.Provider>
+                            <Tooltip.Root>
+                              <Tooltip.Trigger><span style="font-size: 0px">test</span><image class="h-8" style="margin-top:-12px" src="{achievement.badge}"/></Tooltip.Trigger
+                              >
+                              <Tooltip.Content>
+                                <p>{achievement.name}</p>
+                                <p>{achievement.description}</p>
+                              </Tooltip.Content>
+                            </Tooltip.Root>
+                          </Tooltip.Provider>
+                        {/each}
                     </div>
                 </div>
                 
             </ScrollArea>
         </div>
         <div class="p-4 bg-recent/40">
-            <p class="text-base mb-4">DLC</p>
+            <p class="text-base mb-1">DLC</p>
+            <ScrollArea orientation="horizontal">
+                <div class="flex w-full space-x-4">
+                    {#each selectedGame.dlc as dlc}
+                    <Tooltip.Provider>
+                        <Tooltip.Root>
+                          <Tooltip.Trigger><span style="font-size: 0px">test</span><image class="h-16" style="margin-top:-12px" src="{dlc.image}"/></Tooltip.Trigger
+                          >
+                          <Tooltip.Content>
+                            <p>{dlc.name}</p>
+                          </Tooltip.Content>
+                        </Tooltip.Root>
+                      </Tooltip.Provider>
+                    {/each}
+                </div>
+            </ScrollArea>
         </div>
     </div>
 </div>

@@ -21,6 +21,7 @@ const config = {
 				'filter': '#76808C',
 				'gamebar': '#313843',
 				'play': '#00DF3C',
+				'install': '#2381EA',
 				'recent': '#1E2329',
 				border: "hsl(var(--border) / <alpha-value>)",
 				input: "hsl(var(--input) / <alpha-value>)",

@@ -1,11 +1,12 @@
 // src/lib/data/games.js
 
 export const allGames = [
-  { name: 'Batman', image: 'src/lib/images/batman_arkham.jpg', link: '/game/batman' },
-  { name: 'Bioshock', image: 'src/lib/images/bioshock.jpg', link: '/game/bioshock' },
-  { name: 'Borderlands 2', image: 'src/lib/images/borderlands2.jpg', link: '/game/borderlands2' },
-  { name: 'Halo', image: 'src/lib/images/halo.jpg', link: '/game/halo' },
-  { name: 'Sonic Frontiers', 
+  { name: 'Batman', installed: true, image: 'src/lib/images/batman_arkham.jpg', link: '/game/batman' },
+  { name: 'Bioshock', installed: true, image: 'src/lib/images/bioshock.jpg', link: '/game/bioshock' },
+  { name: 'Borderlands 2', installed: true, image: 'src/lib/images/borderlands2.jpg', link: '/game/borderlands2' },
+  { name: 'Halo', installed: true, image: 'src/lib/images/halo.jpg', link: '/game/halo' },
+  { name: 'Sonic Frontiers',
+    installed: true, 
     image: 'https://cdn2.steamgriddb.com/icon/108fe115000c147427da50c2b0c9ce31.png', 
     link: '/game/sonicfrontiers', 
     bg: 'https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1237320/capsule_616x353.jpg?t=1709923853',
