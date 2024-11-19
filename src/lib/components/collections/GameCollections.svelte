@@ -1,6 +1,8 @@
 <!-- src/lib/components/collections/GameCollections.svelte -->
 
 <script>
+// @ts-nocheck
+
     import { createEventDispatcher } from 'svelte';
     
     export let collection = null; // Collection is mandatory for rendering games
@@ -167,6 +169,7 @@
     }
   </style>
   
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="game-collection"
     on:dragover|preventDefault
@@ -180,6 +183,7 @@
         <button class="sort-button" on:click={sortCollection} title="Sort">
           Sort
         </button>
+        <!-- svelte-ignore a11y_consider_explicit_label -->
         <button
           class="collapse-button {isCollapsed ? 'collapsed' : ''}"
           on:click={() => (isCollapsed = !isCollapsed)}
@@ -190,6 +194,7 @@
     {#if !isCollapsed}
       <div class="game-grid">
         {#each games as game}
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="game-item" on:click={() => selectGame(game)}>
             <img src={game.image} alt={game.name} />
             <button class="remove-button" on:click={(e) => { e.stopPropagation(); removeGame(game); }}>×</button>

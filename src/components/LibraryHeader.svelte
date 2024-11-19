@@ -9,6 +9,8 @@
 
   let { value = $bindable(), ...props} = $props();
 
+  const dispatch = createEventDispatcher();
+
     // Handle Recent button click
     function handleRecentClick() {
     dispatch('sort', { sortBy: 'recent' });
@@ -61,5 +63,3 @@
     <span style="font-size: 1.2rem;">A-Z</span>
 </Button>
 
-<!-- View Label -->
-<p class="ml-10 mt-2">View</p>
