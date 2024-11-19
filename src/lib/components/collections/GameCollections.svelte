@@ -4,7 +4,8 @@
 // @ts-nocheck
 
     import { createEventDispatcher } from 'svelte';
-    
+    import { allGames } from '$lib/data/games.js';
+
     export let collection = null; // Collection is mandatory for rendering games
     const dispatch = createEventDispatcher();
   
@@ -14,7 +15,7 @@
     // Reactive statement to populate games based on collection
     $: {
       if (collection) {
-        games = [...collection.games];
+        games = allGames.filter(game => collection.games.find(a => a.name == game.name))
       }
     }
   
