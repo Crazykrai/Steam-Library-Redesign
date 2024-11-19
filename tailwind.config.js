@@ -20,6 +20,8 @@ const config = {
 				'input-background': '#0E141B',
 				'filter': '#76808C',
 				'gamebar': '#313843',
+				'play': '#00DF3C',
+				'recent': '#1E2329',
 				border: "hsl(var(--border) / <alpha-value>)",
 				input: "hsl(var(--input) / <alpha-value>)",
 				ring: "hsl(var(--ring) / <alpha-value>)",

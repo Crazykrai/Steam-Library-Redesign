@@ -17,7 +17,7 @@
   
   // Function to handle game selection
   function onGameSelect(game) {
-    selectedGame = game;
+    selectedGame = allGames.find(item => item.name == game.name );
     activeTab = "game";
     // Update "Recent Games" collection within userCollections
     userCollections.update((collections) => {
@@ -225,6 +225,8 @@
     <div class="flex side-bar text-white">
       <div class="pt-2 pl-1 pr-8 w-full grid grid-flow-row auto-rows-max gap-1">
         {#each allGames.sort((a, b) => a.name.localeCompare(b.name)) as game}
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div
             class="draggable-game clickable"
             draggable="true"

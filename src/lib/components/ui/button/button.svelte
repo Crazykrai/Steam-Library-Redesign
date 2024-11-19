@@ -14,9 +14,11 @@
 				ghost: "hover:bg-accent hover:text-accent-foreground",
 				link: "text-primary underline-offset-4 hover:underline",
 				recent: "bg-filter bg-opacity-5 text-filter hover:bg-opacity-25",
+				play: "bg-play text-primary-foreground hover:bg-play/90",
 			},
 			size: {
 				default: "h-10 px-4 py-2",
+				play: "h-10 px-4 py-2 w-32",
 				sm: "h-9 rounded-md px-3",
 				lg: "h-11 rounded-md px-8",
 				icon: "h-10 w-10",
