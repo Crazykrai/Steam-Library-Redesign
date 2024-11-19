@@ -1,4 +1,5 @@
-<!-- src/App.svelte -->
+<!-- App.svelte -->
+
 <script>
   import "./app.css";
   import LibraryHeader from "./components/LibraryHeader.svelte";
@@ -9,18 +10,14 @@
   import { allGames } from './lib/data/games.js';
   import { userCollections } from './lib/stores.js'; // Import the userCollections store
   import { onDestroy } from 'svelte';
-
+  
   // State variables
   let activeTab = "collections"; // Possible values: "collections", "news", "game"
   let selectedGame = null;
-
-  let searchQuery = '';
-  let sortBy = 'alphabetical'; // 'alphabetical', 'recent', 'installed'
-  let suggestions = [];
-
+  
   // Function to handle game selection
   function onGameSelect(game) {
-    selectedGame = allGames.find(item => item.name === game.name );
+    selectedGame = allGames.find(item => item.name == game.name );
     activeTab = "game";
     // Update "Recent Games" collection within userCollections
     userCollections.update((collections) => {
@@ -43,30 +40,30 @@
       });
     });
   }
-
+  
   // Function to handle tab changes
   function onTabChange(value) {
     activeTab = value;
     selectedGame = null; // Reset selected game when switching tabs
   }
-
+  
   // Subscribe to userCollections store
   let userCollectionsList = [];
   const unsubscribe = userCollections.subscribe((value) => {
     userCollectionsList = value;
   });
-
+  
   // Clean up subscription on component destroy
   onDestroy(() => {
     unsubscribe();
   });
-
+  
   // Function to handle game selection from collections
   function handleSelectGame(event) {
     const { game } = event.detail;
     onGameSelect(game);
   }
-
+  
   // Function to handle sort event from GameCollections component
   function handleSort(collectionTitle) {
     userCollections.update((collections) => {
@@ -81,7 +78,7 @@
       });
     });
   }
-
+  
   // Function to handle game drop into a collection
   function handleDrop(event) {
     const { game, collectionTitle } = event.detail;
@@ -131,7 +128,7 @@
       });
     });
   }
-
+  
   // Function to handle game removal from a collection
   function handleRemoveGame(event, collectionTitle) {
     const { game } = event.detail;
@@ -151,78 +148,19 @@
     
     console.log(`Successfully removed "${game.name}" from "${collectionTitle}"`);
   }
-
-  // Handle search event from LibraryHeader
-  function handleLibraryHeaderSearch(event) {
-    searchQuery = event.detail.query;
-    // Update suggestions based on search query
-    suggestions = allGames.filter(game =>
-      game.name.toLowerCase().includes(searchQuery.toLowerCase())
-    ).slice(0, 5); // limit to 5 suggestions
-  }
-
-  // Handle sort event from LibraryHeader
-  function handleLibraryHeaderSort(event) {
-    sortBy = event.detail.sortBy;
-  }
-
-  // Handle selectGame event from LibraryHeader
-  function handleLibraryHeaderSelectGame(event) {
-    const { game } = event.detail;
-    onGameSelect(game);
-  }
-
-  // Derived list of games based on search and sort
-  $: filteredGames = allGames.filter(game =>
-    game.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  $: sortedGames = (() => {
-    let games = [...filteredGames];
-
-    if (sortBy === 'recent') {
-      const recentCollection = userCollectionsList.find(col => col.title === 'Recent Games');
-      const recentGames = recentCollection ? recentCollection.games.map(g => g.name) : [];
-      games.sort((a, b) => {
-        const aIndex = recentGames.indexOf(a.name);
-        const bIndex = recentGames.indexOf(b.name);
-        if (aIndex === -1 && bIndex === -1) {
-          return a.name.localeCompare(b.name);
-        } else if (aIndex === -1) {
-          return 1;
-        } else if (bIndex === -1) {
-          return -1;
-        } else {
-          return aIndex - bIndex;
-        }
-      });
-    } else if (sortBy === 'installed') {
-      games.sort((a, b) => {
-        if (a.installed === b.installed) {
-          return a.name.localeCompare(b.name);
-        }
-        return a.installed ? -1 : 1;
-      });
-    } else {
-      // alphabetical
-      games.sort((a, b) => a.name.localeCompare(b.name));
-    }
-
-    return games;
-  })();
 </script>
 
 <style>
   /* Existing styles... */
   .steam-bar {
     background-color: #0E141B;
-    padding: 15px;
+    padding:15px;
     font-family: 'Inter';
   }
 
   .library-header {
     background-color: #212B45;
-    padding: 10px;
+    padding:10px;
   }
 
   .side-bar {
@@ -245,7 +183,7 @@
     padding: 8px;
     cursor: grab;
     border-radius: 4px;
-    transition: background-color 0.2s, opacity 0.2s;
+    transition: background-color 0.2s;
   }
 
   .draggable-game:hover {
@@ -259,18 +197,10 @@
     margin-right: 8px;
   }
 
-  /* Grey out uninstalled games */
-  .draggable-game.uninstalled {
-    opacity: 0.6;
-  }
-
   /* Optional: Add pointer cursor for clickable games */
   .draggable-game.clickable {
     cursor: pointer;
   }
-
-  /* Active sort button styles */
-  /* Handled within Button.svelte via the active prop */
 </style>
 
 <main class="h-full w-full">
@@ -286,15 +216,7 @@
 
   <!-- Library Header -->
   <div class="flex library-header text-white">
-    <LibraryHeader 
-      {activeTab} 
-      onTabChange={onTabChange} 
-      on:search={handleLibraryHeaderSearch} 
-      on:sort={handleLibraryHeaderSort} 
-      on:selectGame={handleLibraryHeaderSelectGame}
-      {suggestions}
-      activeSort={sortBy}
-    />
+    <LibraryHeader {activeTab} {onTabChange} />
   </div>
 
   <!-- Main Grid Layout -->
@@ -302,10 +224,11 @@
     <!-- Steam Sidebar -->
     <div class="flex side-bar text-white">
       <div class="pt-2 pl-1 pr-8 w-full grid grid-flow-row auto-rows-max gap-1">
-        {#each sortedGames as game}
-          <!-- Draggable and Clickable Game Item -->
+        {#each allGames.sort((a, b) => a.name.localeCompare(b.name)) as game}
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div
-            class="draggable-game clickable { !game.installed ? 'uninstalled' : '' }"
+            class="draggable-game clickable"
             draggable="true"
             on:dragstart={(event) => {
               event.dataTransfer.setData('application/json', JSON.stringify(game));
