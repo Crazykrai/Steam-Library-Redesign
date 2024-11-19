@@ -253,7 +253,8 @@
   <div class="flex text-lg steam-bar text-white font-bold">
     <p class="text-filter">&lt</p>
     <p class="ml-4 text-filter">&gt</p>
-    <p class="ml-8">STEAM</p>
+    <img class="h-5 ml-8 mt-1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Steam_icon_logo.svg/2048px-Steam_icon_logo.svg.png" alt="Steam Logo"/>
+    <p class="ml-2">STEAM</p>
     <p class="ml-16">STORE</p>
     <p class="ml-16">COMMUNITY</p>
     <p class="ml-16" style="color: #66C0F4">LIBRARY</p>

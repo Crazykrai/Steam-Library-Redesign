@@ -4,7 +4,7 @@ export const allGames = [
     {
       name: 'Batman',
       installed: false,
-      image: 'src/lib/images/batman_arkham.jpg', // Original local image
+      image: '/images/batman_arkham.jpg', // Original local image
       link: '/game/batman',
       bg: 'https://gameswithfriendswrites.wordpress.com/wp-content/uploads/2015/07/batman-arkham-knight-game-hd-wallpaper-1080p.jpg', // Batman game wallpaper
       friends: {
@@ -69,7 +69,7 @@ export const allGames = [
     {
       name: 'Bioshock',
       installed: false,
-      image: 'src/lib/images/bioshock.jpg', // Original local image
+      image: '/images/bioshock.jpg', // Original local image
       link: '/game/bioshock',
       bg: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/7670/header.jpg?t=1730172622', // Bioshock game wallpaper
       friends: {
@@ -134,7 +134,7 @@ export const allGames = [
     {
       name: 'Borderlands 2',
       installed: true,
-      image: 'src/lib/images/borderlands2.jpg', // Original local image
+      image: '/images/borderlands2.jpg', // Original local image
       link: '/game/borderlands2',
       bg: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/49520/header.jpg?t=1728608124', // Borderlands 2 game wallpaper
       friends: {
@@ -199,7 +199,7 @@ export const allGames = [
     {
       name: 'Halo',
       installed: true,
-      image: 'src/lib/images/halo.jpg', // Original local image
+      image: '/images/halo.jpg', // Original local image
       link: '/game/halo',
       bg: 'https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/976730/capsule_616x353.jpg?t=1670458602', // Halo game wallpaper
       friends: {
