@@ -80,16 +80,24 @@ For our research, we did background research on current issues with Steam’s li
 - **Add a ‘Recent Activity’ section** to the game page to give another way for developers to showcase information about the game that can actually benefit the users.
 - **Remove unused portions of the game page** based on user experience, such as the general activity section and trading cards.
 
-### Interface Controls
+### Sketches
+![alt text](images/image.png)
+![alt text](<images/image (1).png>)
+![alt text](<images/image (2).png>)
+![alt text](<images/image (3).png>)
+![alt text](<images/image (4).png>)
+![alt text](<images/image (5).png>)
+
+## Interface Controls
 
 #### Main Components
-
+![alt text](<images/library header.png>)
 - **Choice of tab (Collections vs. News)**
   - Easily allows switching between the different sections, and the current section is highlighted for easy comprehension.
 
 - **Sort and collapse button**
   - Allows the user to reverse the order of sorting for the collections/news, alongside easily collapsing any section if it is not needed.
-
+![alt text](images/collections.png)
 - **Game icon**
   - The game icon allows the user to clearly see what game is there, alongside a red "X" at the top to easily remove the game from any given collection.
 
@@ -98,7 +106,7 @@ For our research, we did background research on current issues with Steam’s li
 
 - **Sorting for news**
   - Allows the user to sort by date and alphabetically, along with a collapse button for easy reading of news stories.
-
+![alt text](<images/game data.png>)
 - **Friend activity**
   - Shows current friends playing the game, along with those who aren’t playing but have played recently. Hovering over their icon shows the gamertag.
 
@@ -107,10 +115,10 @@ For our research, we did background research on current issues with Steam’s li
 
 - **DLC**
   - Shows available DLCs and allows the user to hover over for more info.
-
+![alt text](<images/game info.png>)
 - **Recent activity and stats**
   - Shows the user recent activity such as duration played, total achievements, screenshots taken, and how many friends you have played with. It also gives a summary and last time played.
-
+![alt text](images/sidebar.png)
 - **Sidebar**
   - Provides all available games. Supports drag and drop into collections for easier game management. Clicking on a game brings the user to the game page.
 

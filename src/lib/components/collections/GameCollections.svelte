@@ -34,6 +34,7 @@
     // Handle drag events to add visual feedback
     function handleDragEnter(event) {
       event.preventDefault();
+      console.log(event)
       event.currentTarget.classList.add('drag-over');
     }
   
