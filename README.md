@@ -131,3 +131,10 @@ Jacob used AI here and there again to help with implementation. When using AI, y
 ### Future Work
 
 As one of our main goals was customizability, there are still many other features that could be added to continue improving this. The collections page can have ways to rename and delete each collection, as well as being able to change the order of how collections appear on the screen.
+
+---
+
+## Demo & Links
+
+- **Demo Video:** [Watch the Demo](https://drive.google.com/file/d/1QZ5TfqHP1NH52qSwgcmKw9YGuGAHKy_N/view?pli=1)
+- **Public Link:** [steam-library-redesign.vercel.app](https://steam-library-redesign.vercel.app/)
